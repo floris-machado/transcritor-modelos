@@ -1,0 +1,1025 @@
+{
+  "catalog_version": "0.3.1",
+  "schema_version": "1.0.1",
+  "updated_at": "2026-08-08",
+  "models": [
+    {
+      "id": "voxtral-mini-3b",
+      "name": "Mistral Voxtral Mini 3B (lote)",
+      "task": "asr",
+      "languages": [
+        "en",
+        "zh",
+        "hi",
+        "es",
+        "ar",
+        "fr",
+        "pt",
+        "ru",
+        "de",
+        "ja",
+        "ko",
+        "it",
+        "nl"
+      ],
+      "runtime": "other",
+      "format": "safetensors",
+      "quantization": null,
+      "streaming": false,
+      "timestamps": "segment",
+      "punctuation": true,
+      "diarization": false,
+      "status": "pending_hash",
+      "sha256": "",
+      "size_bytes": null,
+      "source_url": "https://huggingface.co/mistralai/Voxtral-Mini-3B-2507",
+      "download_url": null,
+      "license": "Apache-2.0",
+      "license_verified_at": "2026-08-08",
+      "wer_reference": [
+        {
+          "benchmark": "Open ASR Leaderboard multilíngue (paper, Tabela 4, snapshot 2025-10)",
+          "language": "pt",
+          "value_percent": 4.8,
+          "source_url": "https://arxiv.org/html/2510.06961v1",
+          "consulted_at": "2026-08-08"
+        }
+      ],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 8192,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 8192,
+          "min_vram_mb": 10240,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "2º melhor WER pt publicado do leaderboard (atrás só do large-v3). PRB-0019. Repositório multiarquivo: o fluxo de instalação de artefato único (REQ-005) não se aplica ainda — pending_hash até definição de empacotamento (mesma questão do PRB-0017). Runtime classe A: MLX (a validar); produção: vLLM."
+    },
+    {
+      "id": "qwen3-asr-1.7b",
+      "name": "Qwen3-ASR 1.7B",
+      "task": "asr_streaming",
+      "languages": [
+        "pt",
+        "en",
+        "es",
+        "fr",
+        "de",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "ar",
+        "zh"
+      ],
+      "runtime": "other",
+      "format": "safetensors",
+      "quantization": null,
+      "streaming": true,
+      "timestamps": "none",
+      "punctuation": true,
+      "diarization": false,
+      "status": "pending_hash",
+      "sha256": "",
+      "size_bytes": null,
+      "source_url": "https://huggingface.co/Qwen/Qwen3-ASR-1.7B",
+      "download_url": null,
+      "license": "Apache-2.0",
+      "license_verified_at": "2026-08-08",
+      "wer_reference": [],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 6144,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 6144,
+          "min_vram_mb": 6144,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Streaming+lote unificados no mesmo modelo (cartão 2026-08-08); competidor do Nemotron 3.5 na PoC da F2. PRB-0019. Cartão declara 30 línguas + 22 dialetos — aqui listadas apenas as confirmadas na leitura do cartão; lista integral a transcrever na adoção. Variante 0.6B existe para classes menores. Repositório multiarquivo (mesma pendência de empacotamento do voxtral-mini-3b); WER pt isolado a extrair do relatório técnico (arXiv 2601.21337)."
+    },
+    {
+      "id": "cohere-transcribe-2b",
+      "name": "Cohere Transcribe (03-2026)",
+      "task": "asr",
+      "languages": [
+        "en",
+        "de",
+        "fr",
+        "it",
+        "es",
+        "pt",
+        "el",
+        "nl",
+        "pl",
+        "ar",
+        "vi",
+        "zh",
+        "ja",
+        "ko"
+      ],
+      "runtime": "other",
+      "format": "safetensors",
+      "quantization": null,
+      "streaming": false,
+      "timestamps": "none",
+      "punctuation": true,
+      "diarization": false,
+      "status": "pending_hash",
+      "sha256": "",
+      "size_bytes": null,
+      "source_url": "https://huggingface.co/CohereLabs/cohere-transcribe-03-2026",
+      "download_url": null,
+      "license": "Apache-2.0",
+      "license_verified_at": "2026-08-08",
+      "wer_reference": [
+        {
+          "benchmark": "Open ASR Leaderboard (trilha EN — indicativo, não é pt)",
+          "language": "en",
+          "value_percent": 5.42,
+          "source_url": "https://huggingface.co/CohereLabs/cohere-transcribe-03-2026",
+          "consulted_at": "2026-08-08"
+        }
+      ],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 6144,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 6144,
+          "min_vram_mb": 8192,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Pesos abertos Apache-2.0 (exceção ao padrão NC da Cohere Labs, conferido no cartão). Lote/long-form com chunking automático; sem streaming. Líder da trilha EN entre abertos; WER pt não publicado. PRB-0019; repositório multiarquivo (pendência de empacotamento)."
+    },
+    {
+      "id": "granite-speech-4.1-2b",
+      "name": "IBM Granite Speech 4.1 2B",
+      "task": "asr",
+      "languages": [
+        "en",
+        "fr",
+        "de",
+        "es",
+        "pt",
+        "ja"
+      ],
+      "runtime": "other",
+      "format": "safetensors",
+      "quantization": null,
+      "streaming": false,
+      "timestamps": "none",
+      "punctuation": true,
+      "diarization": false,
+      "status": "pending_hash",
+      "sha256": "",
+      "size_bytes": null,
+      "source_url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b",
+      "download_url": null,
+      "license": "Apache-2.0",
+      "license_verified_at": "2026-08-08",
+      "wer_reference": [],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 6144,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 6144,
+          "min_vram_mb": 6144,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Cartão cita mlx-audio e llama.cpp (a validar — se confirmado, vira caminho natural das classes A/B). Variante granite-4.0-1b-speech (~1 B) é a opção edge/classe D. WER pt isolado não publicado. PRB-0019; repositório multiarquivo (pendência de empacotamento)."
+    },
+    {
+      "id": "fun-asr-mlt-nano-gguf",
+      "name": "Fun-ASR-MLT-Nano (GGUF)",
+      "task": "asr_streaming",
+      "languages": [
+        "pt",
+        "en",
+        "zh",
+        "es",
+        "fr",
+        "de",
+        "ja",
+        "ko"
+      ],
+      "runtime": "other",
+      "format": "gguf",
+      "quantization": null,
+      "streaming": true,
+      "timestamps": "none",
+      "punctuation": true,
+      "diarization": false,
+      "status": "pending_hash",
+      "sha256": "",
+      "size_bytes": null,
+      "source_url": "https://huggingface.co/FunAudioLLM/Fun-ASR-MLT-Nano-2512",
+      "download_url": null,
+      "license": "Apache-2.0",
+      "license_verified_at": "2026-08-08",
+      "wer_reference": [],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 3072,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": true,
+          "min_ram_mb": 3072,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 2048,
+          "min_vram_mb": 2048,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "800 M, streaming, terceiro competidor da PoC de streaming da F2 (com Nemotron 3.5 e Qwen3-ASR). Cartão declara 31 idiomas — listadas as confirmadas na leitura; lista integral na adoção. GGUF/llama.cpp: se o artefato GGUF único se confirmar, é o primeiro candidato novo compatível com o fluxo de instalação de artefato único do REQ-005. Runtime marcado other porque llama.cpp não integra o núcleo (decisão de motor é da F2). WER pt não publicado — medir no corpus próprio. PRB-0019."
+    },
+    {
+      "id": "whisper-large-v3-turbo-q5",
+      "name": "Whisper large-v3-turbo (GGUF q5_0)",
+      "task": "asr",
+      "languages": [
+        "*"
+      ],
+      "runtime": "whisper_cpp",
+      "format": "gguf",
+      "quantization": "q5_0",
+      "streaming": false,
+      "timestamps": "segment",
+      "punctuation": true,
+      "diarization": false,
+      "status": "available",
+      "sha256": "394221709cd5ad1f40c46e6031ca61bce88931e6e088c188294c6d5a55ffa7e2",
+      "size_bytes": 574041195,
+      "source_url": "https://huggingface.co/openai/whisper-large-v3-turbo",
+      "download_url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo-q5_0.bin",
+      "license": "Apache-2.0",
+      "license_verified_at": "2026-08-03",
+      "wer_reference": [],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 3072,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": true,
+          "min_ram_mb": 3072,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 2048,
+          "min_vram_mb": 2048,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Candidato padrão de lote na classe A/B. 99 idiomas. Hash e download_url a fixar na F1."
+    },
+    {
+      "id": "whisper-large-v3-q5",
+      "name": "Whisper large-v3 (GGUF q5_0)",
+      "task": "asr",
+      "languages": [
+        "*"
+      ],
+      "runtime": "whisper_cpp",
+      "format": "gguf",
+      "quantization": "q5_0",
+      "streaming": false,
+      "timestamps": "segment",
+      "punctuation": true,
+      "diarization": false,
+      "status": "available",
+      "sha256": "d75795ecff3f83b5faa89d1900604ad8c780abd5739fae406de19f23ecd98ad1",
+      "size_bytes": 1081140203,
+      "source_url": "https://huggingface.co/openai/whisper-large-v3",
+      "download_url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-q5_0.bin",
+      "license": "Apache-2.0",
+      "license_verified_at": "2026-08-03",
+      "wer_reference": [],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 4096,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": true,
+          "min_ram_mb": 4096,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 2048,
+          "min_vram_mb": 3072,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Máxima robustez multilíngue em áudio adverso; mais lento que o turbo."
+    },
+    {
+      "id": "parakeet-tdt-0.6b-v3-int8",
+      "name": "NVIDIA Parakeet-TDT 0.6B v3 (ONNX int8)",
+      "task": "asr",
+      "languages": [
+        "bg",
+        "hr",
+        "cs",
+        "da",
+        "nl",
+        "en",
+        "et",
+        "fi",
+        "fr",
+        "de",
+        "el",
+        "hu",
+        "it",
+        "lv",
+        "lt",
+        "mt",
+        "pl",
+        "pt",
+        "ro",
+        "sk",
+        "sl",
+        "es",
+        "sv",
+        "ru",
+        "uk"
+      ],
+      "runtime": "onnx",
+      "format": "onnx",
+      "quantization": "int8",
+      "streaming": false,
+      "timestamps": "word",
+      "punctuation": true,
+      "diarization": false,
+      "status": "pending_hash",
+      "sha256": "",
+      "size_bytes": null,
+      "source_url": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+      "download_url": null,
+      "license": "CC-BY-4.0",
+      "license_verified_at": "2026-08-03",
+      "wer_reference": [
+        {
+          "benchmark": "Fleurs (pt)",
+          "language": "pt",
+          "value_percent": 4.76,
+          "source_url": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+          "consulted_at": "2026-08-03"
+        },
+        {
+          "benchmark": "Open ASR Leaderboard (média multilíngue)",
+          "language": "multi",
+          "value_percent": 6.34,
+          "source_url": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+          "consulted_at": "2026-08-03"
+        }
+      ],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 2048,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": true,
+          "min_ram_mb": 2048,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 2048,
+          "min_vram_mb": 2048,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": true,
+          "min_ram_mb": 2048,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Melhor custo-benefício pt em lote (cartão oficial: ≥2 GB RAM). Suporte sherpa-onnx confirmado em 2026-08-03: artefato int8 oficial nos releases do projeto (somente lote, não streaming). WER pt-BR próprio pendente (PRB-0014)."
+    },
+    {
+      "id": "canary-1b-v2",
+      "name": "NVIDIA Canary-1B v2",
+      "task": "asr_ast",
+      "languages": [
+        "bg",
+        "hr",
+        "cs",
+        "da",
+        "nl",
+        "en",
+        "et",
+        "fi",
+        "fr",
+        "de",
+        "el",
+        "hu",
+        "it",
+        "lv",
+        "lt",
+        "mt",
+        "pl",
+        "pt",
+        "ro",
+        "sk",
+        "sl",
+        "es",
+        "sv",
+        "ru",
+        "uk"
+      ],
+      "runtime": "nemo",
+      "format": "safetensors",
+      "quantization": null,
+      "streaming": false,
+      "timestamps": "segment",
+      "punctuation": true,
+      "diarization": false,
+      "status": "available",
+      "sha256": "ae5ef1bf06812a95a1594a8f5f0ee9c51f35418e5ba96939fa6b98ab00431094",
+      "size_bytes": 6358958080,
+      "source_url": "https://huggingface.co/nvidia/canary-1b-v2",
+      "download_url": "https://huggingface.co/nvidia/canary-1b-v2/resolve/main/canary-1b-v2.nemo",
+      "license": "CC-BY-4.0",
+      "license_verified_at": "2026-08-03",
+      "wer_reference": [
+        {
+          "benchmark": "HF Leaderboard (média)",
+          "language": "multi",
+          "value_percent": 7.15,
+          "source_url": "https://huggingface.co/nvidia/canary-1b-v2",
+          "consulted_at": "2026-08-03"
+        }
+      ],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 8192,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 8192,
+          "min_vram_mb": 4096,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "ASR + tradução de fala en↔24. Correção de 2026-08-03: o artefato publicado é o .nemo fp32 de 6,36 GB — o '≈ 2 GB fp16' da pesquisa inaugural era estimativa de conversão que a fonte não distribui; id e requisitos ajustados (RAM re-estimada; medição na adoção). Hash local conferido contra o ponteiro LFS da fonte. Runtime NeMo é pesado para embutir; validação de exportação ONNX diferida à adoção (F3)."
+    },
+    {
+      "id": "voxtral-realtime-4b",
+      "name": "Mistral Voxtral Realtime 4B",
+      "task": "asr_streaming",
+      "languages": [
+        "en",
+        "zh",
+        "hi",
+        "es",
+        "ar",
+        "fr",
+        "pt",
+        "ru",
+        "de",
+        "ja",
+        "ko",
+        "it",
+        "nl"
+      ],
+      "runtime": "other",
+      "format": "safetensors",
+      "quantization": null,
+      "streaming": true,
+      "timestamps": "word",
+      "punctuation": true,
+      "diarization": true,
+      "status": "pending_hash",
+      "sha256": "",
+      "size_bytes": null,
+      "source_url": "https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602",
+      "download_url": null,
+      "license": "Apache-2.0",
+      "license_verified_at": "2026-08-03",
+      "wer_reference": [],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 16384,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 8192,
+          "min_vram_mb": 16384,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": false,
+          "min_ram_mb": null,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Streaming nativo com pt (atraso configurável <200 ms). Cartão verificado em 2026-08-03: ~3,4B LM + ~970M encoder; BF16 exige GPU ≥16 GB; runtimes vLLM (produção) e Transformers ≥5.2; llama.cpp pendente. Na classe A só via execução quantizada (integração MLX comunitária) não validada ([SUP-003]). Opção da classe C; superado como candidato primário da F2 pelo Nemotron 3.5."
+    },
+    {
+      "id": "nemotron-3.5-asr-streaming-0.6b",
+      "name": "NVIDIA Nemotron 3.5 ASR Streaming 0.6B",
+      "task": "asr_streaming",
+      "languages": [
+        "en-US",
+        "en-GB",
+        "es-US",
+        "es-ES",
+        "de",
+        "fr-FR",
+        "fr-CA",
+        "it",
+        "ar",
+        "ja",
+        "ko",
+        "pt-BR",
+        "pt-PT",
+        "ru",
+        "hi",
+        "tr",
+        "vi",
+        "nl",
+        "uk",
+        "pl",
+        "fi",
+        "zh",
+        "cs",
+        "bg",
+        "sk",
+        "sv",
+        "hr",
+        "ro",
+        "et",
+        "da",
+        "hu",
+        "nb",
+        "nn",
+        "he",
+        "el",
+        "lt",
+        "lv",
+        "mt",
+        "sl",
+        "th"
+      ],
+      "runtime": "nemo",
+      "format": "safetensors",
+      "quantization": null,
+      "streaming": true,
+      "timestamps": "none",
+      "punctuation": true,
+      "diarization": false,
+      "status": "available",
+      "sha256": "210214ed94039bf6bfbb9a047c7fa289628db75b103e2bf6381fa78285436a74",
+      "size_bytes": 2368284501,
+      "source_url": "https://huggingface.co/nvidia/nemotron-3.5-asr-streaming-0.6b",
+      "download_url": "https://huggingface.co/nvidia/nemotron-3.5-asr-streaming-0.6b/resolve/main/nemotron-3.5-asr-streaming-0.6b.nemo",
+      "license": "OpenMDW-1.1",
+      "license_verified_at": "2026-08-03",
+      "wer_reference": [
+        {
+          "benchmark": "FLEURS (pt-BR/pt-PT, LangID, chunk 1,12 s)",
+          "language": "pt",
+          "value_percent": 5.48,
+          "source_url": "https://huggingface.co/nvidia/nemotron-3.5-asr-streaming-0.6b",
+          "consulted_at": "2026-08-03"
+        }
+      ],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 3072,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": true,
+          "min_ram_mb": 3072,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 2048,
+          "min_vram_mb": 2048,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": true,
+          "min_ram_mb": 2048,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Candidato primário de streaming da F2 (decisão de 2026-08-03): pt-BR 'transcription-ready', chunks de 80 ms a 1,12 s, pontuação nativa; cartão não menciona timestamps. Runtime oficial NeMo/Riva; conversões comunitárias ONNX int4 (onnx-community) e CoreML (FluidInference) a validar na PoC da F2. Ler texto integral da OpenMDW-1.1 antes do primeiro download."
+    },
+    {
+      "id": "silero-vad-v5",
+      "name": "Silero VAD",
+      "task": "vad",
+      "languages": [
+        "*"
+      ],
+      "runtime": "onnx",
+      "format": "onnx",
+      "quantization": null,
+      "streaming": true,
+      "timestamps": "none",
+      "punctuation": false,
+      "diarization": false,
+      "status": "available",
+      "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+      "size_bytes": 2327524,
+      "source_url": "https://github.com/snakers4/silero-vad",
+      "download_url": "https://github.com/snakers4/silero-vad/raw/master/src/silero_vad/data/silero_vad.onnx",
+      "license": "MIT",
+      "license_verified_at": "2026-08-03",
+      "wer_reference": [],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 64,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": true,
+          "min_ram_mb": 64,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 64,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": true,
+          "min_ram_mb": 64,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Componente do pipeline (~2 MB). Obrigatório para tempo real."
+    },
+    {
+      "id": "opus-mt-romance-en-ct2",
+      "name": "Opus-MT ROMANCE→en (CTranslate2) — cobre pt→en",
+      "task": "translation",
+      "languages": [
+        "pt",
+        "pt-BR",
+        "es",
+        "fr",
+        "it",
+        "ro",
+        "en"
+      ],
+      "runtime": "ctranslate2",
+      "format": "ct2",
+      "quantization": "int8",
+      "streaming": false,
+      "timestamps": "none",
+      "punctuation": false,
+      "diarization": false,
+      "status": "available",
+      "sha256": "6d299ba16e5c08f0f483c7eaf93c2c55d9080f24e36929ba9a465f18b9bc8e0f",
+      "size_bytes": 67010020,
+      "source_url": "https://huggingface.co/Helsinki-NLP/opus-mt-ROMANCE-en",
+      "download_url": "https://github.com/floris-machado/transcritor-modelos/releases/download/opus-mt-ct2-20260809/opus-mt-romance-en-ct2.tar.gz",
+      "license": "Apache-2.0",
+      "license_verified_at": "2026-08-03",
+      "wer_reference": [],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Tradução local padrão pt→en (decisão Q-13). Correção de 2026-08-03: o par dedicado 'opus-mt-tc-big-pt-en' não existe; este modelo multilíngue romance→en cobre pt/pt_BR→en (cartão verificado). Qualidade vs. par dedicado a aferir no bench da F3. Artefato tar.gz convertido por nós em 2026-08-09 (proveniência: docs/PROVENIENCIA_ARTEFATOS.md), com source.spm/target.spm e ATTRIBUTION.txt embutidos; extração do diretório CT2 na instalação acompanha o motor de tradução da F3. Integração: fonte deve terminar com </s>."
+    },
+    {
+      "id": "opus-mt-en-pt-ct2",
+      "name": "Opus-MT en→pt (CTranslate2)",
+      "task": "translation",
+      "languages": [
+        "en",
+        "pt"
+      ],
+      "runtime": "ctranslate2",
+      "format": "ct2",
+      "quantization": "int8",
+      "streaming": false,
+      "timestamps": "none",
+      "punctuation": false,
+      "diarization": false,
+      "status": "available",
+      "sha256": "108e12466b739f5aca25889768568d36a3fcc9c0d95db2c6ed087348a6f29ed1",
+      "size_bytes": 215940607,
+      "source_url": "https://huggingface.co/Helsinki-NLP/opus-mt-tc-big-en-pt",
+      "download_url": "https://github.com/floris-machado/transcritor-modelos/releases/download/opus-mt-ct2-20260809/opus-mt-en-pt-ct2.tar.gz",
+      "license": "CC-BY-4.0",
+      "license_verified_at": "2026-08-03",
+      "wer_reference": [],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "en→pt com pt-BR via token >>pob<< (cartão verificado em 2026-08-03). Artefato tar.gz convertido por nós em 2026-08-09 (proveniência: docs/PROVENIENCIA_ARTEFATOS.md), com source.spm/target.spm e ATTRIBUTION.txt embutidos; extração do diretório CT2 na instalação acompanha o motor de tradução da F3. Integração: fonte deve terminar com </s>."
+    },
+    {
+      "id": "opus-mt-en-es-ct2",
+      "name": "Opus-MT en→es (CTranslate2)",
+      "task": "translation",
+      "languages": [
+        "en",
+        "es"
+      ],
+      "runtime": "ctranslate2",
+      "format": "ct2",
+      "quantization": "int8",
+      "streaming": false,
+      "timestamps": "none",
+      "punctuation": false,
+      "diarization": false,
+      "status": "available",
+      "sha256": "62f1f5573ed5a02ef84ed8eb41138f995f6e19fb8d1dd4ce2794879c33604669",
+      "size_bytes": 68616539,
+      "source_url": "https://huggingface.co/Helsinki-NLP/opus-mt-en-es",
+      "download_url": "https://github.com/floris-machado/transcritor-modelos/releases/download/opus-mt-ct2-20260809/opus-mt-en-es-ct2.tar.gz",
+      "license": "Apache-2.0",
+      "license_verified_at": "2026-08-03",
+      "wer_reference": [],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Núcleo es (Q-09). Par pt↔es direto tem cobertura Opus-MT limitada; rota via en como alternativa — avaliar na F3. Artefato tar.gz convertido por nós em 2026-08-09 (proveniência: docs/PROVENIENCIA_ARTEFATOS.md), com source.spm/target.spm e ATTRIBUTION.txt embutidos; extração do diretório CT2 na instalação acompanha o motor de tradução da F3. Integração: fonte deve terminar com </s>."
+    },
+    {
+      "id": "opus-mt-es-en-ct2",
+      "name": "Opus-MT es→en (CTranslate2)",
+      "task": "translation",
+      "languages": [
+        "es",
+        "en"
+      ],
+      "runtime": "ctranslate2",
+      "format": "ct2",
+      "quantization": "int8",
+      "streaming": false,
+      "timestamps": "none",
+      "punctuation": false,
+      "diarization": false,
+      "status": "available",
+      "sha256": "09886c346d900ca7fb64165d30d973803d61f4d50a2d877f0f7f4d6c44df6c92",
+      "size_bytes": 67782114,
+      "source_url": "https://huggingface.co/Helsinki-NLP/opus-mt-es-en",
+      "download_url": "https://github.com/floris-machado/transcritor-modelos/releases/download/opus-mt-ct2-20260809/opus-mt-es-en-ct2.tar.gz",
+      "license": "Apache-2.0",
+      "license_verified_at": "2026-08-03",
+      "wer_reference": [],
+      "requirements": {
+        "class_a": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_b": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_c": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        },
+        "class_d": {
+          "supported": true,
+          "min_ram_mb": 1024,
+          "min_vram_mb": null,
+          "estimated": true
+        }
+      },
+      "recommended": false,
+      "notes": "Par reverso do anterior. Artefato tar.gz convertido por nós em 2026-08-09 (proveniência: docs/PROVENIENCIA_ARTEFATOS.md), com source.spm/target.spm e ATTRIBUTION.txt embutidos; extração do diretório CT2 na instalação acompanha o motor de tradução da F3. Integração: fonte deve terminar com </s>."
+    }
+  ]
+}

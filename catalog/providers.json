@@ -1,0 +1,80 @@
+{
+  "catalog_version": "0.2.0",
+  "updated_at": "2026-08-03",
+  "note": "Modelos só entram com verificação datada na documentação oficial do provedor (docs/CATALOGO_MODELOS.md). Preços em USD por milhão de tokens, sempre o preço padrão (teto conservador para estimativas); promoções vão em notes. Anthropic preenchido em 2026-08-03; demais provedores aguardam verificação.",
+  "providers": [
+    {
+      "id": "google-gemini",
+      "name": "Google (Gemini)",
+      "api_base": "https://generativelanguage.googleapis.com",
+      "auth": { "type": "api_key", "location": "header", "field": "x-goog-api-key" },
+      "docs_url": "https://ai.google.dev/gemini-api/docs",
+      "pricing_url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "models": [],
+      "models_verified_at": null
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic (Claude)",
+      "api_base": "https://api.anthropic.com",
+      "auth": { "type": "api_key", "location": "header", "field": "x-api-key" },
+      "docs_url": "https://docs.claude.com",
+      "pricing_url": "https://claude.com/pricing",
+      "models": [
+        {
+          "id": "claude-opus-5",
+          "name": "Claude Opus 5",
+          "context_window_tokens": 1000000,
+          "max_output_tokens": 128000,
+          "pricing": { "input_usd_per_mtok": 5.0, "output_usd_per_mtok": 25.0, "verified_at": "2026-08-03", "source_url": "https://platform.claude.com/docs/en/about-claude/models/overview" },
+          "notes": "Recomendado pela documentação como ponto de partida para trabalho complexo."
+        },
+        {
+          "id": "claude-sonnet-5",
+          "name": "Claude Sonnet 5",
+          "context_window_tokens": 1000000,
+          "max_output_tokens": 128000,
+          "pricing": { "input_usd_per_mtok": 3.0, "output_usd_per_mtok": 15.0, "verified_at": "2026-08-03", "source_url": "https://platform.claude.com/docs/en/about-claude/models/overview" },
+          "notes": "Equilíbrio velocidade×qualidade. Preço introdutório de 2/10 USD por MTok vigente até 2026-08-31; registrado o padrão (teto conservador)."
+        },
+        {
+          "id": "claude-haiku-4-5",
+          "name": "Claude Haiku 4.5",
+          "context_window_tokens": 200000,
+          "max_output_tokens": 64000,
+          "pricing": { "input_usd_per_mtok": 1.0, "output_usd_per_mtok": 5.0, "verified_at": "2026-08-03", "source_url": "https://platform.claude.com/docs/en/about-claude/models/overview" },
+          "notes": "Mais rápido e barato; contexto de 200 mil tokens (exige particionamento mais cedo em sessões longas)."
+        },
+        {
+          "id": "claude-fable-5",
+          "name": "Claude Fable 5",
+          "context_window_tokens": 1000000,
+          "max_output_tokens": 128000,
+          "pricing": { "input_usd_per_mtok": 10.0, "output_usd_per_mtok": 50.0, "verified_at": "2026-08-03", "source_url": "https://platform.claude.com/docs/en/about-claude/models/overview" },
+          "notes": "Capacidade máxima disponível ao público; custo mais alto — usar quando a qualidade justificar."
+        }
+      ],
+      "models_verified_at": "2026-08-03"
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "api_base": "https://api.openai.com",
+      "auth": { "type": "bearer", "location": "header", "field": "Authorization" },
+      "docs_url": "https://platform.openai.com/docs",
+      "pricing_url": "https://platform.openai.com/docs/pricing",
+      "models": [],
+      "models_verified_at": null
+    },
+    {
+      "id": "xai",
+      "name": "xAI (Grok)",
+      "api_base": "https://api.x.ai",
+      "auth": { "type": "bearer", "location": "header", "field": "Authorization" },
+      "docs_url": "https://docs.x.ai",
+      "pricing_url": "https://docs.x.ai",
+      "models": [],
+      "models_verified_at": null
+    }
+  ]
+}

@@ -26,3 +26,12 @@ CTranslate2 4.8.1, transformers 5.14.1, torch 2.13.0, em 2026-08-09), com os
 tokenizadores SentencePiece copiados sem alteração. Cada `tar.gz` embute um
 `ATTRIBUTION.txt` com a fonte, o commit exato e a licença. Os artefatos são
 redistribuídos sob as mesmas licenças dos modelos originais.
+
+## Canal de atualização do catálogo
+
+O diretório [`catalog/`](catalog/) publica o catálogo vigente do Transcritor
+(`models.json`, `providers.json` e o schema). O aplicativo consulta esta
+fonte por HTTPS (REQ-028) e valida cada candidato antes de qualquer
+aplicação: versão estritamente maior, schema compatível, nenhuma entrada
+instalável sem SHA-256, preços de API só com data de verificação. A
+atualização nunca é aplicada sem confirmação do usuário diante do diff.

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Catálogo de modelos locais do Transcritor",
+  "description": "Schema v1.0.1 (1.0.1: removido $id que não era URI válida e quebrava resolvedores de $ref antigos — correção sem mudança de restrições). Alterações estruturais exigem incremento de schema_version e ADR (regra inviolável nº 3 do CLAUDE.md).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["catalog_version", "schema_version", "updated_at", "models"],
+  "properties": {
+    "catalog_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "schema_version": { "type": "string", "const": "1.0.1" },
+    "updated_at": { "type": "string", "format": "date" },
+    "models": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/model" }
+    }
+  },
+  "$defs": {
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "name", "task", "languages", "runtime", "format", "streaming",
+        "timestamps", "status", "sha256", "size_bytes", "source_url",
+        "download_url", "license", "requirements", "recommended"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9.]+)*$",
+          "description": "Identificador estável: familia-variante-quantizacao."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "task": {
+          "enum": ["asr", "asr_streaming", "asr_ast", "translation", "vad", "diarization"]
+        },
+        "languages": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "description": "BCP-47 (pt, pt-BR, en, es...) ou '*' para agnóstico." }
+        },
+        "runtime": {
+          "enum": ["whisper_cpp", "ctranslate2", "onnx", "nemo", "coreml", "candle", "other"]
+        },
+        "format": { "enum": ["gguf", "ct2", "onnx", "safetensors", "coreml", "jit", "other"] },
+        "quantization": { "type": ["string", "null"], "description": "q8_0, q5_0, int8, fp16... null = precisão original." },
+        "streaming": { "type": "boolean" },
+        "timestamps": { "enum": ["none", "segment", "word"] },
+        "punctuation": { "type": "boolean", "default": false },
+        "diarization": { "type": "boolean", "default": false },
+        "status": {
+          "enum": ["available", "pending_hash", "deprecated"],
+          "description": "pending_hash: catalogado sem artefato verificado — NÃO instalável."
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^([a-f0-9]{64})?$",
+          "description": "Hash do artefato, calculado localmente. Vazio só com status=pending_hash."
+        },
+        "size_bytes": { "type": ["integer", "null"], "minimum": 1 },
+        "source_url": { "type": "string", "format": "uri", "description": "Fonte primária (cartão do modelo)." },
+        "download_url": { "type": ["string", "null"], "format": "uri" },
+        "license": { "type": "string", "minLength": 1 },
+        "license_verified_at": { "type": ["string", "null"], "format": "date" },
+        "wer_reference": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["benchmark", "language", "value_percent", "source_url", "consulted_at"],
+            "properties": {
+              "benchmark": { "type": "string" },
+              "language": { "type": "string" },
+              "value_percent": { "type": "number", "minimum": 0, "maximum": 100 },
+              "source_url": { "type": "string", "format": "uri" },
+              "consulted_at": { "type": "string", "format": "date" }
+            }
+          }
+        },
+        "requirements": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["class_a", "class_b", "class_c", "class_d"],
+          "properties": {
+            "class_a": { "$ref": "#/$defs/requirement" },
+            "class_b": { "$ref": "#/$defs/requirement" },
+            "class_c": { "$ref": "#/$defs/requirement" },
+            "class_d": { "$ref": "#/$defs/requirement" }
+          },
+          "description": "Classes de hardware do projeto: A Apple Silicon ≥16GB, B x64 sem GPU, C x64+NVIDIA, D móveis."
+        },
+        "recommended": {
+          "type": "boolean",
+          "description": "true só após WER medido no corpus próprio (PRB-0014)."
+        },
+        "notes": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "available" } } },
+          "then": { "properties": { "sha256": { "pattern": "^[a-f0-9]{64}$" } } }
+        }
+      ]
+    },
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["supported", "estimated"],
+      "properties": {
+        "supported": { "type": "boolean" },
+        "min_ram_mb": { "type": ["integer", "null"], "minimum": 1 },
+        "min_vram_mb": { "type": ["integer", "null"], "minimum": 1 },
+        "estimated": { "type": "boolean", "description": "true até medição própria (skill catalogo-de-modelos)." }
+      }
+    }
+  }
+}
