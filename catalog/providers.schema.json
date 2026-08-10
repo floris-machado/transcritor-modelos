@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Catálogo de provedores de API do Transcritor",
+  "description": "Schema v1.0.0 (criado no ADR-0002 D2, sessão 25). Duas listas por provedor: models[] (pós-processamento, preço por token — REQ-007) e asr_models[] (transcrição em nuvem, preço por hora de áudio — REQ-023). Regras espelhadas do models.schema.json: preço sem verified_at não é selecionável; recommended exige wer_ptbr medido no corpus próprio (CA-5 do REQ-023).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["catalog_version", "updated_at", "providers"],
+  "properties": {
+    "catalog_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "updated_at": { "type": "string", "format": "date" },
+    "note": { "type": "string" },
+    "schema_version": { "type": "string" },
+    "providers": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/provider" }
+    }
+  },
+  "$defs": {
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "api_base", "auth", "docs_url", "models", "models_verified_at"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "name": { "type": "string" },
+        "api_base": { "type": "string", "format": "uri" },
+        "auth": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "location", "field"],
+          "properties": {
+            "type": { "enum": ["api_key", "bearer"] },
+            "location": { "enum": ["header", "query"] },
+            "field": { "type": "string" }
+          }
+        },
+        "docs_url": { "type": "string", "format": "uri" },
+        "pricing_url": { "type": "string", "format": "uri" },
+        "models": { "type": "array", "items": { "$ref": "#/$defs/llm_model" } },
+        "models_verified_at": { "type": ["string", "null"], "format": "date" },
+        "asr_models": { "type": "array", "items": { "$ref": "#/$defs/asr_model" } },
+        "notes": { "type": "string" }
+      }
+    },
+    "llm_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "pricing"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "context_window_tokens": { "type": ["integer", "null"], "minimum": 1 },
+        "max_output_tokens": { "type": ["integer", "null"], "minimum": 1 },
+        "pricing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["input_usd_per_mtok", "output_usd_per_mtok", "verified_at"],
+          "properties": {
+            "input_usd_per_mtok": { "type": "number", "exclusiveMinimum": 0 },
+            "output_usd_per_mtok": { "type": "number", "exclusiveMinimum": 0 },
+            "verified_at": { "type": "string", "format": "date" },
+            "source_url": { "type": "string", "format": "uri" }
+          }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "asr_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "modes", "languages_verified", "pricing", "wer_ptbr", "recommended"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "modes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "enum": ["batch", "stream"] }
+        },
+        "languages_verified": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Somente idiomas confirmados em documentação oficial; vazio = cobertura não verificada (a UI declara)."
+        },
+        "pricing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["usd_per_audio_hour_batch", "usd_per_audio_hour_stream", "billing_granularity", "verified_at"],
+          "properties": {
+            "usd_per_audio_hour_batch": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+            "usd_per_audio_hour_stream": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+            "billing_granularity": { "enum": ["per_second", "per_minute", "per_token", "unknown"] },
+            "verified_at": { "type": ["string", "null"], "format": "date" },
+            "source_url": { "type": "string", "format": "uri" }
+          }
+        },
+        "wer_ptbr": {
+          "type": ["number", "null"],
+          "exclusiveMinimum": 0,
+          "description": "WER pt-BR medido no corpus próprio (fração 0–1 não: PERCENTUAL). null até medição (PRB-0014); recommended exige valor."
+        },
+        "recommended": { "type": "boolean" },
+        "notes": { "type": "string" }
+      },
+      "if": { "properties": { "recommended": { "const": true } } },
+      "then": { "properties": { "wer_ptbr": { "type": "number" } } }
+    }
+  }
+}

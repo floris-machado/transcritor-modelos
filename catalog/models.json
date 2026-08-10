@@ -1,7 +1,7 @@
 {
-  "catalog_version": "0.4.0",
+  "catalog_version": "0.4.1",
   "schema_version": "1.0.1",
-  "updated_at": "2026-08-09",
+  "updated_at": "2026-08-10",
   "models": [
     {
       "id": "voxtral-mini-3b",
@@ -184,7 +184,7 @@
         }
       },
       "recommended": false,
-      "notes": "Candidato padrão de lote na classe A/B. 99 idiomas. Hash e download_url a fixar na F1."
+      "notes": "Instalável desde a sessão 03 (hash calculado da fonte primária). WER próprio 11,02 % em leitura pt-BR com colapso de repetição de ~90 s (bench/results/wer_4motores_20260808.md) — confiabilidade, não qualidade média, é o problema; preferir large-v3 quando robustez importa."
     },
     {
       "id": "whisper-large-v3-q5",
