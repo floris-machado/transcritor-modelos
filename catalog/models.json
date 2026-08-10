@@ -1,7 +1,7 @@
 {
-  "catalog_version": "0.3.1",
+  "catalog_version": "0.4.0",
   "schema_version": "1.0.1",
-  "updated_at": "2026-08-08",
+  "updated_at": "2026-08-09",
   "models": [
     {
       "id": "voxtral-mini-3b",
@@ -72,7 +72,7 @@
         }
       },
       "recommended": false,
-      "notes": "2º melhor WER pt publicado do leaderboard (atrás só do large-v3). PRB-0019. Repositório multiarquivo: o fluxo de instalação de artefato único (REQ-005) não se aplica ainda — pending_hash até definição de empacotamento (mesma questão do PRB-0017). Runtime classe A: MLX (a validar); produção: vLLM."
+      "notes": "Melhor qualidade de lote medida no corpus próprio: WER 1,47 % (leitura, 2026-08-09, via Transformers/MPS — bench, fora do produto; bench/results/validacao_alternativas_20260809.md). PRB-0019. pending_hash até empacotamento (repositório multiarquivo; precedente tar.gz do PRB-0017) e runtime de produto para classe A (llama.cpp descartou a família; MLX comunitário reprovado na sessão 19; reavaliar na F2/F3). Produção atual: vLLM."
     },
     {
       "id": "qwen3-asr-1.7b",
@@ -133,193 +133,7 @@
         }
       },
       "recommended": false,
-      "notes": "Streaming+lote unificados no mesmo modelo (cartão 2026-08-08); competidor do Nemotron 3.5 na PoC da F2. PRB-0019. Cartão declara 30 línguas + 22 dialetos — aqui listadas apenas as confirmadas na leitura do cartão; lista integral a transcrever na adoção. Variante 0.6B existe para classes menores. Repositório multiarquivo (mesma pendência de empacotamento do voxtral-mini-3b); WER pt isolado a extrair do relatório técnico (arXiv 2601.21337)."
-    },
-    {
-      "id": "cohere-transcribe-2b",
-      "name": "Cohere Transcribe (03-2026)",
-      "task": "asr",
-      "languages": [
-        "en",
-        "de",
-        "fr",
-        "it",
-        "es",
-        "pt",
-        "el",
-        "nl",
-        "pl",
-        "ar",
-        "vi",
-        "zh",
-        "ja",
-        "ko"
-      ],
-      "runtime": "other",
-      "format": "safetensors",
-      "quantization": null,
-      "streaming": false,
-      "timestamps": "none",
-      "punctuation": true,
-      "diarization": false,
-      "status": "pending_hash",
-      "sha256": "",
-      "size_bytes": null,
-      "source_url": "https://huggingface.co/CohereLabs/cohere-transcribe-03-2026",
-      "download_url": null,
-      "license": "Apache-2.0",
-      "license_verified_at": "2026-08-08",
-      "wer_reference": [
-        {
-          "benchmark": "Open ASR Leaderboard (trilha EN — indicativo, não é pt)",
-          "language": "en",
-          "value_percent": 5.42,
-          "source_url": "https://huggingface.co/CohereLabs/cohere-transcribe-03-2026",
-          "consulted_at": "2026-08-08"
-        }
-      ],
-      "requirements": {
-        "class_a": {
-          "supported": true,
-          "min_ram_mb": 6144,
-          "min_vram_mb": null,
-          "estimated": true
-        },
-        "class_b": {
-          "supported": false,
-          "min_ram_mb": null,
-          "min_vram_mb": null,
-          "estimated": true
-        },
-        "class_c": {
-          "supported": true,
-          "min_ram_mb": 6144,
-          "min_vram_mb": 8192,
-          "estimated": true
-        },
-        "class_d": {
-          "supported": false,
-          "min_ram_mb": null,
-          "min_vram_mb": null,
-          "estimated": true
-        }
-      },
-      "recommended": false,
-      "notes": "Pesos abertos Apache-2.0 (exceção ao padrão NC da Cohere Labs, conferido no cartão). Lote/long-form com chunking automático; sem streaming. Líder da trilha EN entre abertos; WER pt não publicado. PRB-0019; repositório multiarquivo (pendência de empacotamento)."
-    },
-    {
-      "id": "granite-speech-4.1-2b",
-      "name": "IBM Granite Speech 4.1 2B",
-      "task": "asr",
-      "languages": [
-        "en",
-        "fr",
-        "de",
-        "es",
-        "pt",
-        "ja"
-      ],
-      "runtime": "other",
-      "format": "safetensors",
-      "quantization": null,
-      "streaming": false,
-      "timestamps": "none",
-      "punctuation": true,
-      "diarization": false,
-      "status": "pending_hash",
-      "sha256": "",
-      "size_bytes": null,
-      "source_url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b",
-      "download_url": null,
-      "license": "Apache-2.0",
-      "license_verified_at": "2026-08-08",
-      "wer_reference": [],
-      "requirements": {
-        "class_a": {
-          "supported": true,
-          "min_ram_mb": 6144,
-          "min_vram_mb": null,
-          "estimated": true
-        },
-        "class_b": {
-          "supported": false,
-          "min_ram_mb": null,
-          "min_vram_mb": null,
-          "estimated": true
-        },
-        "class_c": {
-          "supported": true,
-          "min_ram_mb": 6144,
-          "min_vram_mb": 6144,
-          "estimated": true
-        },
-        "class_d": {
-          "supported": false,
-          "min_ram_mb": null,
-          "min_vram_mb": null,
-          "estimated": true
-        }
-      },
-      "recommended": false,
-      "notes": "Cartão cita mlx-audio e llama.cpp (a validar — se confirmado, vira caminho natural das classes A/B). Variante granite-4.0-1b-speech (~1 B) é a opção edge/classe D. WER pt isolado não publicado. PRB-0019; repositório multiarquivo (pendência de empacotamento)."
-    },
-    {
-      "id": "fun-asr-mlt-nano-gguf",
-      "name": "Fun-ASR-MLT-Nano (GGUF)",
-      "task": "asr_streaming",
-      "languages": [
-        "pt",
-        "en",
-        "zh",
-        "es",
-        "fr",
-        "de",
-        "ja",
-        "ko"
-      ],
-      "runtime": "other",
-      "format": "gguf",
-      "quantization": null,
-      "streaming": true,
-      "timestamps": "none",
-      "punctuation": true,
-      "diarization": false,
-      "status": "pending_hash",
-      "sha256": "",
-      "size_bytes": null,
-      "source_url": "https://huggingface.co/FunAudioLLM/Fun-ASR-MLT-Nano-2512",
-      "download_url": null,
-      "license": "Apache-2.0",
-      "license_verified_at": "2026-08-08",
-      "wer_reference": [],
-      "requirements": {
-        "class_a": {
-          "supported": true,
-          "min_ram_mb": 3072,
-          "min_vram_mb": null,
-          "estimated": true
-        },
-        "class_b": {
-          "supported": true,
-          "min_ram_mb": 3072,
-          "min_vram_mb": null,
-          "estimated": true
-        },
-        "class_c": {
-          "supported": true,
-          "min_ram_mb": 2048,
-          "min_vram_mb": 2048,
-          "estimated": true
-        },
-        "class_d": {
-          "supported": false,
-          "min_ram_mb": null,
-          "min_vram_mb": null,
-          "estimated": true
-        }
-      },
-      "recommended": false,
-      "notes": "800 M, streaming, terceiro competidor da PoC de streaming da F2 (com Nemotron 3.5 e Qwen3-ASR). Cartão declara 31 idiomas — listadas as confirmadas na leitura; lista integral na adoção. GGUF/llama.cpp: se o artefato GGUF único se confirmar, é o primeiro candidato novo compatível com o fluxo de instalação de artefato único do REQ-005. Runtime marcado other porque llama.cpp não integra o núcleo (decisão de motor é da F2). WER pt não publicado — medir no corpus próprio. PRB-0019."
+      "notes": "Streaming+lote unificados; competidor do Nemotron 3.5 na PoC de streaming da F2 (decisão do item (f) do PRB-0019, 2026-08-09). WER próprio 2,56 % (leitura, 2026-08-08, MLX comunitário — único candidato MLX validado). Cartão declara 30 línguas + 22 dialetos — listadas as confirmadas na leitura. Variante 0.6B existe para classes menores. Repositório multiarquivo: empacotamento tar.gz na adoção (precedente PRB-0017); WER pt publicado a extrair do relatório técnico (arXiv 2601.21337)."
     },
     {
       "id": "whisper-large-v3-turbo-q5",
