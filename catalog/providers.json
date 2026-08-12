@@ -1,6 +1,6 @@
 {
-  "catalog_version": "0.3.0",
-  "updated_at": "2026-08-10",
+  "catalog_version": "0.4.0",
+  "updated_at": "2026-08-12",
   "note": "Modelos só entram com verificação datada na documentação oficial do provedor. models[] = pós-processamento (USD por milhão de tokens, preço padrão como teto conservador); asr_models[] = transcrição em nuvem (REQ-023/ADR-0002 D2, USD por hora de áudio; preços da pesquisa datada em docs/MATRIZ_CUSTO_ASR.md). recommended de ASR exige wer_ptbr medido no corpus próprio (CA-5). Anthropic: a API não aceita áudio em 2026 — sem asr_models.",
   "providers": [
     {
@@ -33,9 +33,9 @@
             "verified_at": "2026-08-08",
             "source_url": "https://ai.google.dev/gemini-api/docs/pricing"
           },
-          "wer_ptbr": null,
+          "wer_ptbr": 0.0202,
           "recommended": false,
-          "notes": "Preço DERIVADO da tarifa por token (≈115 200 tok de entrada por hora de áudio; cálculo e suposição declarada em docs/MATRIZ_CUSTO_ASR.md) — estimativa, não tarifa publicada por hora. Contexto 1M comporta ~9,5 h por chamada."
+          "notes": "WER pt-BR 2,02 % medido no corpus próprio (leitura, N=1833, referência revisada 1×; 2026-08-12, bench/results/wer_nuvem_20260812.md) — melhor preço entre os medidos (US$ 0,068/h, derivado da tarifa por token; suposição em docs/MATRIZ_CUSTO_ASR.md). Em áudio longo inteiro o modelo para voluntariamente (~60 % das palavras, finishReason=STOP): o cliente do núcleo fatia > 8 min e recusa resposta com finishReason != STOP."
         }
       ]
     },
@@ -127,7 +127,9 @@
             "batch",
             "stream"
           ],
-          "languages_verified": [],
+          "languages_verified": [
+            "pt"
+          ],
           "pricing": {
             "usd_per_audio_hour_batch": 0.18,
             "usd_per_audio_hour_stream": 0.18,
@@ -135,9 +137,9 @@
             "verified_at": "2026-08-08",
             "source_url": "https://platform.openai.com/docs/pricing"
           },
-          "wer_ptbr": null,
-          "recommended": false,
-          "notes": "Streaming incluso no mesmo preço (matriz 2026-08-08). pt sem lista explícita na documentação — cobertura não verificada."
+          "wer_ptbr": 0.0147,
+          "recommended": true,
+          "notes": "WER pt-BR 1,47 % medido no corpus próprio (leitura, N=1833, referência revisada 1×; 2026-08-12, bench/results/wer_nuvem_20260812.md) — empata com o líder local (Voxtral Mini 3B). Limite de ~2 000 tokens de saída por requisição: o cliente do núcleo fatia áudio > 8 min e usa os limites reais das fatias como timestamps. Streaming incluso no mesmo preço."
         },
         {
           "id": "gpt-4o-transcribe",
@@ -146,7 +148,9 @@
             "batch",
             "stream"
           ],
-          "languages_verified": [],
+          "languages_verified": [
+            "pt"
+          ],
           "pricing": {
             "usd_per_audio_hour_batch": 0.36,
             "usd_per_audio_hour_stream": 0.36,
@@ -154,9 +158,9 @@
             "verified_at": "2026-08-08",
             "source_url": "https://platform.openai.com/docs/pricing"
           },
-          "wer_ptbr": null,
+          "wer_ptbr": 0.0164,
           "recommended": false,
-          "notes": "3,3 % AA-WER publicado (inglês). pt sem lista explícita — cobertura não verificada."
+          "notes": "WER pt-BR 1,64 % medido no corpus próprio (mesma régua, 2026-08-12) — pior e 2× mais caro que o gpt-4o-mini-transcribe na leitura; sem motivo medido para preferi-lo em lote. Mesmo limite de saída (cliente fatia > 8 min). 3,3 % AA-WER publicado (inglês)."
         }
       ]
     },
