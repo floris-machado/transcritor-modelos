@@ -1,7 +1,7 @@
 {
-  "catalog_version": "0.4.2",
+  "catalog_version": "0.4.3",
   "schema_version": "1.0.1",
-  "updated_at": "2026-08-10",
+  "updated_at": "2026-08-13",
   "models": [
     {
       "id": "voxtral-mini-3b",
@@ -72,7 +72,7 @@
         }
       },
       "recommended": false,
-      "notes": "Melhor qualidade de lote medida no corpus próprio: WER 1,47 % (leitura, 2026-08-09, via Transformers/MPS — bench, fora do produto; bench/results/validacao_alternativas_20260809.md). Correção 2026-08-10 (ADR-0003): o llama.cpp SUPORTA o Mini 3B em lote via mtmd (o \"not planned\" era só do Realtime 4B) — via elegível na PoC da F2 (D4), com artefato por conversão própria ou decisão de proveniência sobre o GGUF da ggml-org (E5). pending_hash até a PoC aprovar a via."
+      "notes": "Melhor qualidade de lote medida no corpus próprio: WER 1,47 % (leitura, 2026-08-09, via Transformers/MPS — bench, fora do produto). A via de produto (llama.cpp/mtmd, ADR-0003 D4) REPROVOU na leitura em 2026-08-13: 2,45 % na melhor rota (o runtime não implementa o modo dedicado de transcrição) — retração +67 % sobre a referência, acima do teto D3. Confirmação final no cenário reunião; enquanto isso a família atende por nuvem (voxtral-mini-transcribe-v2) e a precisão máxima local segue com o qwen3-asr-1.7b (bench/results/poc_llamacpp_20260813.md)."
     },
     {
       "id": "qwen3-asr-1.7b",
@@ -133,7 +133,7 @@
         }
       },
       "recommended": false,
-      "notes": "Streaming+lote unificados; competidor do Nemotron 3.5 na PoC de streaming da F2 (item (f) do PRB-0019; matriz fixada no ADR-0003 D2: lote via llama.cpp/mtmd, streaming só por re-janelamento — o modo oficial é Transformers/vLLM, inelegível). WER próprio 2,56 % (leitura, 2026-08-08, MLX comunitário). Variante 0.6B existe para classes menores. Empacotamento tar.gz na adoção (precedente PRB-0017); WER pt publicado a extrair do relatório técnico (arXiv 2601.21337)."
+      "notes": "Streaming+lote unificados; competidor do Nemotron 3.5 na PoC de streaming da F2 (item (f) do PRB-0019; matriz fixada no ADR-0003). Em lote, MELHOR VIA EMBARCÁVEL MEDIDA: WER 1,80 % na leitura via conversão própria + llama.cpp b10330, Q8_0 sem retração (2026-08-13, bench/results/poc_llamacpp_20260813.md) — supera o Parakeet (2,40 %) e a via MLX comunitária (2,56 %, sessão 19: o elo fraco era a conversão). Saída com moldura language/<asr_text> a analisar na integração."
     },
     {
       "id": "whisper-large-v3-turbo-q5",
