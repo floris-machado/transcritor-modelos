@@ -1,6 +1,6 @@
 {
-  "catalog_version": "0.4.0",
-  "updated_at": "2026-08-12",
+  "catalog_version": "0.5.0",
+  "updated_at": "2026-08-13",
   "note": "Modelos só entram com verificação datada na documentação oficial do provedor. models[] = pós-processamento (USD por milhão de tokens, preço padrão como teto conservador); asr_models[] = transcrição em nuvem (REQ-023/ADR-0002 D2, USD por hora de áudio; preços da pesquisa datada em docs/MATRIZ_CUSTO_ASR.md). recommended de ASR exige wer_ptbr medido no corpus próprio (CA-5). Anthropic: a API não aceita áudio em 2026 — sem asr_models.",
   "providers": [
     {
@@ -30,12 +30,32 @@
             "usd_per_audio_hour_batch": 0.068,
             "usd_per_audio_hour_stream": null,
             "billing_granularity": "per_token",
-            "verified_at": "2026-08-08",
+            "verified_at": "2026-08-13",
             "source_url": "https://ai.google.dev/gemini-api/docs/pricing"
           },
           "wer_ptbr": 0.0202,
           "recommended": false,
-          "notes": "WER pt-BR 2,02 % medido no corpus próprio (leitura, N=1833, referência revisada 1×; 2026-08-12, bench/results/wer_nuvem_20260812.md) — melhor preço entre os medidos (US$ 0,068/h, derivado da tarifa por token; suposição em docs/MATRIZ_CUSTO_ASR.md). Em áudio longo inteiro o modelo para voluntariamente (~60 % das palavras, finishReason=STOP): o cliente do núcleo fatia > 8 min e recusa resposta com finishReason != STOP."
+          "notes": "WER pt-BR 2,02 % medido no corpus próprio (leitura, N=1833, referência revisada 1×; 2026-08-12, bench/results/wer_nuvem_20260812.md) — melhor preço entre os medidos. Base reconferida em 2026-08-13: entrada US$ 0,30/1M (≈ US$ 0,035/h a 32 tok/s) + saída; derivação em docs/MATRIZ_CUSTO_ASR.md. Em áudio longo inteiro o modelo para voluntariamente (~60 % das palavras, finishReason=STOP): o cliente do núcleo fatia > 8 min e recusa resposta com finishReason != STOP."
+        },
+        {
+          "id": "gemini-3.1-flash-live-preview",
+          "name": "Gemini 3.1 Flash Live (preview)",
+          "modes": [
+            "stream"
+          ],
+          "languages_verified": [
+            "pt"
+          ],
+          "pricing": {
+            "usd_per_audio_hour_batch": null,
+            "usd_per_audio_hour_stream": 0.3,
+            "billing_granularity": "per_minute",
+            "verified_at": "2026-08-13",
+            "source_url": "https://ai.google.dev/gemini-api/docs/pricing"
+          },
+          "wer_ptbr": null,
+          "recommended": false,
+          "notes": "Live API (tempo real; rodada 6, 2026-08-13): entrada de áudio US$ 0,005/min (US$ 0,30/h) + saída de texto US$ 4,50/1M à parte. [NÃO VERIFICADO] modo somente-transcrição sem geração de resposta — confirmar na F3 (ADR-0002 D5). Status preview: sujeito a mudança sem aviso."
         }
       ]
     },
@@ -121,6 +141,26 @@
       "models_verified_at": null,
       "asr_models": [
         {
+          "id": "gpt-transcribe",
+          "name": "GPT Transcribe",
+          "modes": [
+            "batch"
+          ],
+          "languages_verified": [
+            "pt"
+          ],
+          "pricing": {
+            "usd_per_audio_hour_batch": 0.27,
+            "usd_per_audio_hour_stream": null,
+            "billing_granularity": "per_minute",
+            "verified_at": "2026-08-13",
+            "source_url": "https://developers.openai.com/api/docs/pricing"
+          },
+          "wer_ptbr": 0.0175,
+          "recommended": false,
+          "notes": "Recomendado pelo guia oficial de STT da OpenAI para lote (US$ 0,0045/min; rodada 6, 2026-08-13), mas MEDIDO PIOR no corpus próprio: WER pt-BR 1,75 % (leitura, N=1833, mesma régua; 2026-08-13, bench/results/wer_nuvem_20260813.md) — perde para o gpt-4o-mini-transcribe (1,47 %) custando 1,5×; sem motivo medido para preferi-lo em pt-BR. Já constava da matriz de custo desde 2026-08-08 — a lacuna era do catálogo."
+        },
+        {
           "id": "gpt-4o-mini-transcribe",
           "name": "GPT-4o mini Transcribe",
           "modes": [
@@ -133,9 +173,9 @@
           "pricing": {
             "usd_per_audio_hour_batch": 0.18,
             "usd_per_audio_hour_stream": 0.18,
-            "billing_granularity": "unknown",
-            "verified_at": "2026-08-08",
-            "source_url": "https://platform.openai.com/docs/pricing"
+            "billing_granularity": "per_minute",
+            "verified_at": "2026-08-13",
+            "source_url": "https://developers.openai.com/api/docs/pricing"
           },
           "wer_ptbr": 0.0147,
           "recommended": true,
@@ -154,13 +194,53 @@
           "pricing": {
             "usd_per_audio_hour_batch": 0.36,
             "usd_per_audio_hour_stream": 0.36,
-            "billing_granularity": "unknown",
-            "verified_at": "2026-08-08",
-            "source_url": "https://platform.openai.com/docs/pricing"
+            "billing_granularity": "per_minute",
+            "verified_at": "2026-08-13",
+            "source_url": "https://developers.openai.com/api/docs/pricing"
           },
           "wer_ptbr": 0.0164,
           "recommended": false,
           "notes": "WER pt-BR 1,64 % medido no corpus próprio (mesma régua, 2026-08-12) — pior e 2× mais caro que o gpt-4o-mini-transcribe na leitura; sem motivo medido para preferi-lo em lote. Mesmo limite de saída (cliente fatia > 8 min). 3,3 % AA-WER publicado (inglês)."
+        },
+        {
+          "id": "gpt-4o-transcribe-diarize",
+          "name": "GPT-4o Transcribe (diarização)",
+          "modes": [
+            "batch"
+          ],
+          "languages_verified": [
+            "pt"
+          ],
+          "pricing": {
+            "usd_per_audio_hour_batch": 0.36,
+            "usd_per_audio_hour_stream": null,
+            "billing_granularity": "per_minute",
+            "verified_at": "2026-08-13",
+            "source_url": "https://developers.openai.com/api/docs/pricing"
+          },
+          "wer_ptbr": null,
+          "recommended": false,
+          "notes": "Transcrição com diarização (rodada 6, 2026-08-13); o guia recomenda chunking para áudio > 30 s. Relevante para a F4 (REQ-014/REQ-027) como alternativa de nuvem à diarização local."
+        },
+        {
+          "id": "gpt-live-transcribe",
+          "name": "GPT Live Transcribe",
+          "modes": [
+            "stream"
+          ],
+          "languages_verified": [
+            "pt"
+          ],
+          "pricing": {
+            "usd_per_audio_hour_batch": null,
+            "usd_per_audio_hour_stream": 1.02,
+            "billing_granularity": "per_minute",
+            "verified_at": "2026-08-13",
+            "source_url": "https://developers.openai.com/api/docs/pricing"
+          },
+          "wer_ptbr": null,
+          "recommended": false,
+          "notes": "Tempo real dedicado (US$ 0,017/min; rodada 6, 2026-08-13) — fica para a F3 (ADR-0002 D5). Mesmo preço do gpt-realtime-whisper na Realtime API."
         }
       ]
     },
@@ -180,7 +260,7 @@
       "asr_models": [
         {
           "id": "grok-stt",
-          "name": "Grok STT",
+          "name": "Grok STT (endpoint dedicado /v1/stt)",
           "modes": [
             "batch",
             "stream"
@@ -192,12 +272,12 @@
             "usd_per_audio_hour_batch": 0.1,
             "usd_per_audio_hour_stream": 0.2,
             "billing_granularity": "unknown",
-            "verified_at": "2026-08-08",
-            "source_url": "https://docs.x.ai"
+            "verified_at": "2026-08-13",
+            "source_url": "https://docs.x.ai/developers/model-capabilities/audio/speech-to-text"
           },
           "wer_ptbr": null,
           "recommended": false,
-          "notes": "Lançado em abr/2026; ~25 idiomas incl. pt (rodada 4 da pesquisa, 2026-08-08); streaming por WebSocket (F3)."
+          "notes": "Preços reconfirmados em 2026-08-13 (24 idiomas incl. pt; diarização; timestamps por palavra; arquivos até 500 MB). Atenção: 'grok-stt' não consta como ID na fonte primária — o serviço é o endpoint dedicado POST /v1/stt (REST) e wss://api.x.ai/v1/stt (streaming, F3); confirmar o ID em chamada autenticada ao implementar o cliente."
         }
       ]
     },
@@ -216,8 +296,8 @@
       "models_verified_at": null,
       "asr_models": [
         {
-          "id": "voxtral-mini-transcribe-v2",
-          "name": "Voxtral Mini Transcribe V2",
+          "id": "voxtral-mini-2602",
+          "name": "Voxtral Mini Transcribe 2 (26.02)",
           "modes": [
             "batch"
           ],
@@ -227,17 +307,17 @@
           "pricing": {
             "usd_per_audio_hour_batch": 0.18,
             "usd_per_audio_hour_stream": null,
-            "billing_granularity": "unknown",
-            "verified_at": "2026-08-08",
-            "source_url": "https://mistral.ai/news/voxtral-transcribe-2/"
+            "billing_granularity": "per_minute",
+            "verified_at": "2026-08-13",
+            "source_url": "https://docs.mistral.ai/capabilities/audio/"
           },
           "wer_ptbr": null,
           "recommended": false,
-          "notes": "Família cuja variante local Mini 3B lidera o corpus próprio (WER 1,47 %, sessão 24) — candidato natural ao 1º cliente de nuvem; wer_ptbr do serviço só via corpus próprio (PRB-0014)."
+          "notes": "ID corrigido na rodada 6 (2026-08-13): o catálogo 0.4.0 registrava 'voxtral-mini-transcribe-v2', que não existe como ID de API — o real é voxtral-mini-2602 (alias voxtral-mini-latest; endpoint POST /v1/audio/transcriptions, áudio até 3 h; o 2507 foi depreciado em 2026-05-31). Família cuja variante local reprovou a leitura via llama.cpp (sessão 30) — nuvem interina até o cenário reunião; wer_ptbr do serviço só via corpus próprio (PRB-0014)."
         },
         {
-          "id": "voxtral-realtime-api",
-          "name": "Voxtral Realtime (API)",
+          "id": "voxtral-mini-realtime-2602",
+          "name": "Voxtral Mini Realtime (26.02)",
           "modes": [
             "stream"
           ],
@@ -247,13 +327,13 @@
           "pricing": {
             "usd_per_audio_hour_batch": null,
             "usd_per_audio_hour_stream": 0.36,
-            "billing_granularity": "unknown",
-            "verified_at": "2026-08-08",
-            "source_url": "https://mistral.ai/news/voxtral-transcribe-2/"
+            "billing_granularity": "per_minute",
+            "verified_at": "2026-08-13",
+            "source_url": "https://docs.mistral.ai/getting-started/models/models_overview"
           },
           "wer_ptbr": null,
           "recommended": false,
-          "notes": "Somente streaming (sub-200 ms) — fica para a F3 (ADR-0002 D5)."
+          "notes": "ID corrigido na rodada 6 (2026-08-13; o catálogo 0.4.0 registrava 'voxtral-realtime-api'). Somente streaming (sub-200 ms) — fica para a F3 (ADR-0002 D5). Pesos abertos Apache-2.0 (candidato também à via local de streaming, PRB-0006)."
         }
       ],
       "notes": "Provedor só de ASR (REQ-023); sem modelos de pós-processamento."
