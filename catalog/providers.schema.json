@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Catálogo de provedores de API do Transcritor",
-  "description": "Schema v1.0.0 (criado no ADR-0002 D2, sessão 25). Duas listas por provedor: models[] (pós-processamento, preço por token — REQ-007) e asr_models[] (transcrição em nuvem, preço por hora de áudio — REQ-023). Regras espelhadas do models.schema.json: preço sem verified_at não é selecionável; recommended exige wer_ptbr medido no corpus próprio (CA-5 do REQ-023).",
+  "description": "Schema v1.1.0 (v1.0.0 criado no ADR-0002 D2, sessão 25; v1.1.0 na sessão 32 pelo REQ-029: pricing.original_rate opcional — tarifa na unidade original do provedor, exibida ao lado da normalização por hora — e aliases opcional em asr_model — IDs alternativos oficiais, contados como conhecidos pela sentinela de novidade). Duas listas por provedor: models[] (pós-processamento, preço por token — REQ-007) e asr_models[] (transcrição em nuvem, preço por hora de áudio — REQ-023). Regras espelhadas do models.schema.json: preço sem verified_at não é selecionável; recommended exige wer_ptbr medido no corpus próprio (CA-5 do REQ-023).",
   "type": "object",
   "additionalProperties": false,
   "required": ["catalog_version", "updated_at", "providers"],
@@ -91,8 +91,23 @@
             "usd_per_audio_hour_stream": { "type": ["number", "null"], "exclusiveMinimum": 0 },
             "billing_granularity": { "enum": ["per_second", "per_minute", "per_token", "unknown"] },
             "verified_at": { "type": ["string", "null"], "format": "date" },
-            "source_url": { "type": "string", "format": "uri" }
+            "source_url": { "type": "string", "format": "uri" },
+            "original_rate": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["value", "unit"],
+              "description": "Tarifa na unidade ORIGINAL do provedor (REQ-029): a UI a exibe ao lado da normalização em US$/h. Omitida quando a tarifa original já é por hora (a normalização é a original).",
+              "properties": {
+                "value": { "type": "number", "exclusiveMinimum": 0 },
+                "unit": { "enum": ["usd_per_minute", "usd_per_1m_tokens"] }
+              }
+            }
           }
+        },
+        "aliases": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "IDs alternativos oficiais do mesmo modelo na API do provedor (ex.: voxtral-mini-latest). A sentinela do REQ-029 os conta como conhecidos."
         },
         "wer_ptbr": {
           "type": ["number", "null"],
