@@ -1,7 +1,7 @@
 {
-  "catalog_version": "0.6.0",
-  "updated_at": "2026-08-13",
-  "note": "Modelos só entram com verificação datada na documentação oficial do provedor. models[] = pós-processamento (USD por milhão de tokens, preço padrão como teto conservador); asr_models[] = transcrição em nuvem (REQ-023/ADR-0002 D2, USD por hora de áudio; preços da pesquisa datada em docs/MATRIZ_CUSTO_ASR.md). recommended de ASR exige wer_ptbr medido no corpus próprio (CA-5). Anthropic: a API não aceita áudio em 2026 — sem asr_models.",
+  "catalog_version": "0.6.4",
+  "updated_at": "2026-08-14",
+  "note": "Modelos só entram com verificação datada na documentação oficial do provedor. models[] = pós-processamento (USD por milhão de tokens, preço padrão como teto conservador); asr_models[] = transcrição em nuvem (REQ-023/ADR-0002 D2, USD por hora de áudio; preços da pesquisa datada em docs/MATRIZ_CUSTO_ASR.md). recommended de ASR exige wer_ptbr medido no corpus próprio (CA-5). ATENÇÃO (2026-08-14): wer_ptbr guarda UM ÚNICO número, do cenário LEITURA. No cenário REUNIÃO, com todos os clientes na mesma fatia de 120 s (sessão 40), os seis motores comparáveis cabem em 2,8 pontos — gpt-transcribe 13,05 %, gpt-4o-transcribe 13,08 %, gemini-3.5-flash-lite 13,88 %, gpt-4o-mini-transcribe 15,86 % — e o recommended de ASR passou a ser o gemini-3.5-flash-lite (era o gpt-4o-mini-transcribe; PRB-0033 encerrado em 2026-08-14). Ler wer_ptbr como se fosse qualidade geral induz a erro — os dois cenários estão em notes de cada modelo; guardar WER por cenário muda o schema (regra inviolável nº 3) e é decisão do usuário, registrada na ficha do PRB-0014. Anthropic: a API não aceita áudio em 2026 — sem asr_models.",
   "providers": [
     {
       "id": "google-gemini",
@@ -38,8 +38,8 @@
             }
           },
           "wer_ptbr": 0.0202,
-          "recommended": false,
-          "notes": "WER pt-BR 2,02 % medido no corpus próprio (leitura, N=1833, referência revisada 1×; 2026-08-12, bench/results/wer_nuvem_20260812.md) — melhor preço entre os medidos. Base reconferida em 2026-08-13: entrada US$ 0,30/1M (≈ US$ 0,035/h a 32 tok/s) + saída; derivação em docs/MATRIZ_CUSTO_ASR.md. Em áudio longo inteiro o modelo para voluntariamente (~60 % das palavras, finishReason=STOP): o cliente do núcleo fatia > 8 min e recusa resposta com finishReason != STOP."
+          "recommended": true,
+          "notes": "WER pt-BR 2,02 % medido no corpus próprio (leitura, N=1833, referência revisada 1×; 2026-08-12, bench/results/wer_nuvem_20260812.md) — melhor preço entre os medidos. Base reconferida em 2026-08-13: entrada US$ 0,30/1M (≈ US$ 0,035/h a 32 tok/s) + saída; derivação em docs/MATRIZ_CUSTO_ASR.md. Em áudio longo inteiro o modelo para voluntariamente (~60 % das palavras, finishReason=STOP): o cliente do núcleo fatia (120 s desde 2026-08-14; eram 480 s) e recusa resposta com finishReason != STOP — recusa que **não** cobre o defeito do PRB-0034, em que a parada vem rotulada como STOP. **RESTABELECIDO em 2026-08-14 (PRB-0032 encerrado):** o 403 vinha da Files API (upload conclui, generateContent recusa a referência); o cliente passou a enviar o áudio embutido na requisição. **REUNIÃO: 13,88 %** — o MENOR número de substituições+deleções dos seis motores medidos (335; turbo 359, gpt-transcribe 413 na rodada de 480 s e 417 sob a fatia de 120 s), indistinguível do turbo (McNemar χ²=1,63) e do large-v3 (χ²=5,11) e superior ao gpt-transcribe em S+D (χ²=16,65), por **um quarto do preço**. Ressalva séria: só chega a esse número com fatia de 120 s — a 480 s mede 41,61 % porque abandona um trecho contíguo devolvendo finishReason=STOP (perda silenciosa, PRB-0034); a mitigação é empírica e não tem prova de suficiência para áudio mais denso. **RECOMENDADO desde 2026-08-14 (sessão 40).** Sob condição idêntica (fatia de 120 s) tem o menor número de substituições+deleções dos seis motores medidos (335), é distinguivelmente melhor que os três serviços da OpenAI no teste pareado de McNemar e custa 1/4 do segundo colocado. Contrapartida declarada: insere mais (204), o que deixa o WER TOTAL em 13,88 % contra 13,05 % do gpt-transcribe — a escolha privilegia não perder conteúdo sobre não acrescentar, porque em transcrição o que falta não se recupera e o que sobra se vê. Ressalva: como todos os clientes de nuvem, depende da fatia curta contra perda silenciosa (PRB-0034)."
         },
         {
           "id": "gemini-3.1-flash-live-preview",
@@ -170,7 +170,7 @@
           },
           "wer_ptbr": 0.0175,
           "recommended": false,
-          "notes": "Recomendado pelo guia oficial de STT da OpenAI para lote (US$ 0,0045/min; rodada 6, 2026-08-13), mas MEDIDO PIOR no corpus próprio: WER pt-BR 1,75 % (leitura, N=1833, mesma régua; 2026-08-13, bench/results/wer_nuvem_20260813.md) — perde para o gpt-4o-mini-transcribe (1,47 %) custando 1,5×; sem motivo medido para preferi-lo em pt-BR. Já constava da matriz de custo desde 2026-08-08 — a lacuna era do catálogo."
+          "notes": "Recomendado pelo guia oficial de STT da OpenAI para lote (US$ 0,0045/min; rodada 6, 2026-08-13), mas MEDIDO PIOR no corpus próprio: WER pt-BR 1,75 % (leitura, N=1833, mesma régua; 2026-08-13, bench/results/wer_nuvem_20260813.md) — perde para o gpt-4o-mini-transcribe (1,47 %) custando 1,5×; sem motivo medido para preferi-lo em pt-BR. Já constava da matriz de custo desde 2026-08-08 — a lacuna era do catálogo. **REUNIÃO, 2026-08-14 (bench/results/wer_reuniao_20260814.md): 12,54 % — MELHOR de todos os medidos, locais e de nuvem.** A ordem da leitura não se repete no cenário que o produto existe para atender (REQ-010) — reordenação com um movimento dominante: a família 4o desaba para o fundo; o rótulo do fornecedor acertou onde a nossa leitura errava. **Remedido a 120 s em 2026-08-14: 13,05 %** (era 12,54 % a 480 s — piora de 0,5 ponto, preço das emendas). Melhor WER total entre os serviços, mas indistinguível dos outros dois da OpenAI no teste pareado e com mais substituições+deleções que o gemini (417 contra 335) por 4× o preço."
         },
         {
           "id": "gpt-4o-mini-transcribe",
@@ -194,8 +194,8 @@
             }
           },
           "wer_ptbr": 0.0147,
-          "recommended": true,
-          "notes": "WER pt-BR 1,47 % medido no corpus próprio (leitura, N=1833, referência revisada 1×; 2026-08-12, bench/results/wer_nuvem_20260812.md) — empata com o líder local (Voxtral Mini 3B). Limite de ~2 000 tokens de saída por requisição: o cliente do núcleo fatia áudio > 8 min e usa os limites reais das fatias como timestamps. Streaming incluso no mesmo preço."
+          "recommended": false,
+          "notes": "WER pt-BR 1,47 % medido no corpus próprio (leitura, N=1833, referência revisada 1×; 2026-08-12, bench/results/wer_nuvem_20260812.md) — empata com o líder local (Voxtral Mini 3B). Limite de ~2 000 tokens de saída por requisição: o cliente do núcleo fatia o áudio (120 s desde 2026-08-14; eram 480 s) e usa os limites reais das fatias como timestamps. Streaming incluso no mesmo preço. **REUNIÃO, 2026-08-14: 25,72 % — o PIOR de todos os medidos** (bench/results/wer_reuniao_20260814.md). Erro concentrado: 65 % em ~2 min do áudio (PRB-0033) — mas o colapso NÃO explica o resultado sozinho: fora dele segue pior que o gpt-transcribe em vários décimos e carrega 316 inserções contra 74. Truncamento e limpeza de fala foram REFUTADOS como causa (contagem de palavras e de marcas de oralidade). O `recommended: true` desta entrada foi decidido só com leitura e esteve sob revisão no PRB-0033. **RECOMENDAÇÃO RETIRADA em 2026-08-14 (sessão 40, encerra PRB-0033).** Sob condição idêntica (fatia de 120 s para todos os clientes) mede 15,86 % na reunião — o pior dos quatro serviços — enquanto o gemini-3.5-flash-lite mede 13,88 % custando US$ 0,068/h contra US$ 0,18/h. É dominância nos DOIS eixos, não preferência. Ressalva de honestidade: o colapso de 65 % medido na sessão 38 NÃO era defeito deste modelo — era a fatia de 480 s do nosso cliente; enviado sozinho, o mesmo trecho volta com 15,3 % contra referência-proxy (transcrição do turbo), número que NÃO é subtraível dos 65 % medidos contra a régua."
         },
         {
           "id": "gpt-4o-transcribe",
@@ -220,7 +220,7 @@
           },
           "wer_ptbr": 0.0164,
           "recommended": false,
-          "notes": "WER pt-BR 1,64 % medido no corpus próprio (mesma régua, 2026-08-12) — pior e 2× mais caro que o gpt-4o-mini-transcribe na leitura; sem motivo medido para preferi-lo em lote. Mesmo limite de saída (cliente fatia > 8 min). 3,3 % AA-WER publicado (inglês)."
+          "notes": "WER pt-BR 1,64 % medido no corpus próprio (mesma régua, 2026-08-12) — pior e 2× mais caro que o gpt-4o-mini-transcribe na leitura; sem motivo medido para preferi-lo em lote. Mesmo limite de saída (cliente fatia a cada 120 s desde 2026-08-14; eram 480 s). 3,3 % AA-WER publicado (inglês). **REUNIÃO, 2026-08-14: 21,70 % com fatia de 480 s** (bench/results/wer_reuniao_20260814.md) — número superado. À época se leu como colapso localizado da família (89 % de erro em ~2 min) somado a condensação (3 410 palavras contra 3 910 da régua, 41,3 marcas de oralidade por mil contra 54,0). **Remedido a 120 s em 2026-08-14: 13,08 %, com 3 766 palavras e 210 deleções.** As DUAS leituras caem: o «erro concentrado» era da fatia longa do nosso cliente e a perda de volume também — «condensação» NÃO é causa apurada e não deve ser afirmada; o estilo dele não foi remedido a 120 s. Indistinguível dos outros dois serviços da OpenAI no teste pareado; segue o mais caro dos três, sem motivo medido para preferi-lo."
         },
         {
           "id": "gpt-4o-transcribe-diarize",
